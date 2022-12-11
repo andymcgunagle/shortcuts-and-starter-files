@@ -1,0 +1,33 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    //// FUNCTIONS ////
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUser(uid) {
+      return request.auth.uid == uid;
+    }
+
+    function isAcceptableImage() {
+      return request.resource.contentType.matches('image/.*');
+      // Could also check for size: request.resource.size < 5 * 1024 * 1024
+    }
+
+    //// RULES ////
+    match /profiles/public/{uid}/{image} {
+      allow create: if isAuthenticated() && isAcceptableImage();
+      allow read: if true;
+      allow update: if isAuthenticated() && isUser(uid) && isAcceptableImage();
+      allow delete: if isAuthenticated() && isUser(uid);
+    }
+
+    match /profiles/private/{uid}/{image} {
+      allow create: if isAuthenticated() && isAcceptableImage();
+      allow update: if isAuthenticated() && isUser(uid) && isAcceptableImage();
+      allow read, delete: if isAuthenticated() && isUser(uid);
+    }    
+  }
+}

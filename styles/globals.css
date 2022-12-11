@@ -1,0 +1,86 @@
+@import './custom-properties.css';
+
+/* Josh W Comeau's CSS reset: https://www.joshwcomeau.com/css/custom-css-reset/ */
+/* EllyLoel's CSS reset: https://gist.github.com/EllyLoel/4ff8a6472247e6dd2315fd4038926522 */
+
+*, 
+*::before, 
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  /* Calc `em` based line height, bigger line height for smaller font size and smaller line height for bigger font size: https://kittygiraudel.com/2020/05/18/using-calc-to-figure-out-optimal-line-height/ */
+  line-height: calc(0.25rem + 1em + 0.25rem);
+  margin: 0;
+  padding: 0;
+}
+
+html, 
+body {
+  height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  text-rendering: optimizeSpeed;
+}
+
+canvas, 
+img, 
+picture,
+svg,
+video {
+  display: block;
+  max-width: 100%;
+}
+
+button, 
+input, 
+select,
+textarea {
+  font: inherit;
+}
+
+p, 
+h1, 
+h2, 
+h3, 
+h4, 
+h5, 
+h6 {
+  overflow-wrap: break-word;
+}
+
+
+:where(ul, ol) {
+  list-style-position: inside;
+}
+
+:where(textarea) {
+  resize: vertical;
+}
+@supports (resize: block) {
+  :where(textarea) {
+    resize: block;
+  }
+}
+
+:where(button, button[type], input[type="button"], input[type="submit"], input[type="reset"]),
+:where(input[type="file"])::-webkit-file-upload-button,
+:where(input[type="file"])::file-selector-button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  user-select: none;
+  text-align: center;
+}
+
+:where(button, button[type], input[type="button"], input[type="submit"], input[type="reset"])[disabled] {
+  cursor: not-allowed;
+}
+
+#root, 
+#__next {
+  isolation: isolate;
+}

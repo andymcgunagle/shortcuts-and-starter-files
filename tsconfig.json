@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "noImplicitAny": true,
+    // "noUnusedParameters": true,
+    // "noUnusedLocals": false,
+    "strictNullChecks": true,
+  },
+}

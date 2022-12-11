@@ -1,0 +1,46 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+  
+    //// FUNCTIONS ////
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Don't forget to check if you're an admin when testing rules.
+    function isAdmin() {
+      return request.auth.token.isAdmin == true;
+    }
+
+    function isUser(uid) {
+      return request.auth.uid == uid;
+    }
+
+    function isDocumentOwner() {
+      return request.auth.uid == resource.data.uid;
+    }
+
+    function publiclyAccessible() {
+      return true;
+    }
+
+    function isViewingOrFavoriting() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['views', 'favoritedBy']); 
+    }
+    
+    //// RULES ////
+    match /{document=**} {
+      allow create, read, update: if isAdmin();
+    }
+
+    match /publicProfiles/{uid} {
+      allow create, read: if isAuthenticated();
+  		allow update, delete: if isAuthenticated() && isUser(uid);
+  	}
+
+    match /privateProfiles/{uid} {
+      allow create: if isAuthenticated();
+  		allow read, update, delete: if isAuthenticated() && isUser(uid);
+  	}
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "scripts": {
+    "deploy:functions": "sh ./scripts/deploy/deploy-functions.sh",
+    "deploy:functions:secret": "sh ./scripts/deploy/set-secret.sh $1",
+    "deploy:rules:firestore": "sh ./scripts/deploy/deploy-firestore-rules.sh",
+    "deploy:rules:storage": "sh ./scripts/deploy/deploy-storage-rules.sh",
+    "emulators:start": "sh ./scripts/emulators/emulators-start.sh",
+    "save": "git add . && git commit && git push origin main",
+    "ts:watch": "tsc --watch --noEmit --incremental"
+  }
+}
